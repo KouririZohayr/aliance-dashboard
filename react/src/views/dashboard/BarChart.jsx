@@ -4,7 +4,7 @@ import { Pie, defaults } from 'react-chartjs-2'
 defaults.global.tooltips.enabled = false
 defaults.global.legend.position = 'bottom'
 
-function BarChart ()  {
+function BarChart() {
   return (
     <div className='bg-white p-6 border rounded-md  dark:border-gray-800 dark:bg-gray-800 '>
       <Pie
@@ -32,12 +32,7 @@ function BarChart ()  {
               ],
               borderWidth: 1,
             },
-            // {
-            //   label: 'Quantity',
-            //   data: [47, 52, 67, 58, 9, 50],
-            //   backgroundColor: 'orange',
-            //   borderColor: 'red',
-            // },
+       
           ],
         }}
         height={400}

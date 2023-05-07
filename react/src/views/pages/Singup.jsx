@@ -1,57 +1,57 @@
-import React,{useRef} from 'react'
+import React, { useRef } from 'react'
 import { Link } from 'react-router-dom'
-import axiosClient from '../axios-client'
-import { useStateContext } from '../context/ContextProvider'
+import axiosClient from '../../axios-client'
+import { useStateContext } from '../../context/ContextProvider'
 function Singup() {
 
-    const nomRef = useRef()
-    const emailRef = useRef()
-    const passwordRef = useRef()
-    const passwordConfirmRef = useRef()
+  const nomRef = useRef()
+  const emailRef = useRef()
+  const passwordRef = useRef()
+  const passwordConfirmRef = useRef()
 
-    const {setUser,setToken} = useStateContext()
+  const { setUser, setToken } = useStateContext()
 
-    const submitForm = (event) => {
-      event.preventDefault()
-      const payload={
-        name : nomRef.current.value ,
-        email : emailRef.current.value,
-        password : passwordRef.current.value,
-        passeword_confirmation : passwordConfirmRef.current.value
-      }
-      axiosClient.post('/signup', payload)
-      .then(({data})=>{
+  const submitForm = (event) => {
+    event.preventDefault()
+    const payload = {
+      name: nomRef.current.value,
+      email: emailRef.current.value,
+      password: passwordRef.current.value,
+      passeword_confirmation: passwordConfirmRef.current.value
+    }
+    axiosClient.post('/signup', payload)
+      .then(({ data }) => {
         setUser(data.user)
         setToken(data.token)
-      }).catch((error)=>{
-        const response= error.response;
-        if(response && response.status === 422 ){
+      }).catch((error) => {
+        const response = error.response;
+        if (response && response.status === 422) {
           console.log(response.data.errors);
         }
       })
-     
-    }
-  
+
+  }
+
 
   return (
 
-    <div className="w-full flex items-center px-4 py-16 bg-sky-950 min-h-screen sm:px-6 lg:px-8    " style={{ 
-          backgroundImage: `url("/img.png")` ,
-        }}> 
+    <div className="w-full flex items-center px-4 py-16 bg-sky-950 min-h-screen sm:px-6 lg:px-8    " style={{
+      backgroundImage: `url("/img.png")`,
+    }}>
       <div className="mx-auto max-w-lg pb-8 pt-6">
-      
+
         <form
           action=""
-          
+
           onSubmit={submitForm}
           className="mb-0 mt-6 space-y-4   shadow-black/50 shadow-md  p-4 rounded-xl bg-gray-50  sm:p-6 lg:p-8"
 
         >
           <div className='flex justify-center '>
-        <img src="/alliance-francaise-logo-vector.svg" className='max-w-[55%]  mb-6' alt="alliance-francaise" />
-        </div>
+            <img src="/alliance-francaise-logo-vector.svg" className='max-w-[55%]  mb-6' alt="alliance-francaise" />
+          </div>
 
-        <div>
+          <div>
             <label htmlFor="email" className="sr-only">Email</label>
 
             <div className="relative">
@@ -62,15 +62,15 @@ function Singup() {
                 className="w-full rounded-xl border-sky-950 bg-gray-200 border-2 p-4 pe-12 text-sm shadow-sm"
                 placeholder="Enter nom"
               />
-         
+
 
               <span className="absolute inset-y-0 end-0 grid place-content-center px-4">
-              <i className="fa-solid fa-user fa-xl text-sky-950" ></i>
+                <i className="fa-solid fa-user fa-xl text-sky-950" ></i>
               </span>
             </div>
           </div>
 
-        
+
 
           <div>
             <label htmlFor="email" className="sr-only">Email</label>
@@ -83,15 +83,15 @@ function Singup() {
                 className="w-full rounded-xl border-sky-950 bg-gray-200 border-2 p-4 pe-12 text-sm shadow-sm"
                 placeholder="Enter email"
               />
-         
+
 
               <span className="absolute inset-y-0 end-0 grid place-content-center px-4">
-              <i className="fa-solid fa-user fa-xl text-sky-950" ></i>
+                <i className="fa-solid fa-user fa-xl text-sky-950" ></i>
               </span>
             </div>
           </div>
 
-          
+
           <div>
             <label htmlFor="password" className="sr-only">Confirme Password</label>
 
@@ -105,26 +105,26 @@ function Singup() {
               />
 
               <span className="absolute inset-y-0 end-0 grid place-content-center px-4">
-              <i className="fa-solid fa-lock fa-xl text-sky-950"></i>
+                <i className="fa-solid fa-lock fa-xl text-sky-950"></i>
               </span>
             </div>
           </div>
-<div>
+          <div>
             <label htmlFor="password" className="sr-only">Password</label>
 
             <div className="relative">
               <input
                 type="password"
                 name="confirm password"
-              ref={passwordConfirmRef}
-                onChange={()=>{console.log(passwordConfirmRef.current.value ,passwordRef.current.value )}}
-              
+                ref={passwordConfirmRef}
+                onChange={() => { console.log(passwordConfirmRef.current.value, passwordRef.current.value) }}
+
                 className="w-full rounded-xl border-sky-950 bg-gray-200 border-2  p-4 pe-12 text-sm shadow-sm"
                 placeholder="Enter password"
               />
 
               <span className="absolute inset-y-0 end-0 grid place-content-center px-4">
-              <i className="fa-solid fa-lock fa-xl text-sky-950"></i>
+                <i className="fa-solid fa-lock fa-xl text-sky-950"></i>
               </span>
             </div>
           </div>
@@ -134,13 +134,13 @@ function Singup() {
           >
             Connexion
           </button>
-            <Link to="/login" className='text-red-600 text-capitalize' >Login</Link>
+          <Link to="/login" className='text-red-600 text-capitalize' >Login</Link>
         </form>
-        
+
       </div>
     </div>
 
-  
+
   )
 }
 

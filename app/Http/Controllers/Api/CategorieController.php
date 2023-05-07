@@ -37,7 +37,7 @@ class CategorieController extends Controller
      */
     public function show(Categorie $categorie)
     {
-        //
+        dd(Categorie::find($categorie));
     }
 
     /**
@@ -60,6 +60,6 @@ class CategorieController extends Controller
      */
     public function destroy(Categorie $categorie)
     {
-        //
+        dd(Categorie::find($categorie));
     }
 }

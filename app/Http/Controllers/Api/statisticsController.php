@@ -15,15 +15,33 @@ class statisticsController extends Controller
     foreach($categories as $categorie){
       $idcat =(int)$categorie->id ;
       $label = $categorie->intitule_CG ;
-      $data =  DB::select("call emp_performance($request->year,$idcat)");
-      
+      $data =  DB::select("call emp_performance($request->year,$idcat)"); 
       $datachart[] = [
         "label"=> $label ,
         "data"=>$data 
       ];
     }
-    
     return  $datachart;
    
   }
+  public function totalTop(){
+    $currentYear= now()->year;
+    $idAndName=[
+      "1" =>  "chargeNonStocable",
+      "10" =>"mobilisationMateriel",
+      "11" =>"mobilisationMobilier",
+      "12" =>  "mobilisatiAmenagements",
+      "2" =>   "services",
+      "6" =>  "travaux"
+    ];
+    /* "select calculate_total_by_categorie_and_y($currentYear,1) as chargeNonStocable", "key" => "chargeNonStocable" */
+    $result=[] ;
+    foreach($idAndName as  $key => $value){
+      $resultArray = DB::selectOne("select calculate_total_by_categorie_and_y($currentYear,$key) as  $value")->$value;
+      $result[$value] = $resultArray==NULL ? 0:$resultArray;
+    };
+  
+    return $result ;
+  }
+  
 }

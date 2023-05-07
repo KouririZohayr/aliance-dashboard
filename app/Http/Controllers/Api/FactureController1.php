@@ -43,31 +43,6 @@ class FactureController extends Controller
 
 
     }
-    public function index2(Request $request)
-    {
-        $ro = $request->row;
-        $idf = $request->IDf;
-        $order = $request->order ?? 'id';
-        $desc = $request->DESC || TRUE;
-        $query = $request->q;
-
-       if (!empty($query)) {
-             $factures = Facture::search($query)
-                         ->orderBy($order, $desc ? 'DESC' : 'ASC')->where("etat",0)
-                        ->paginate($ro);
-        } else {
-             $factures = Facture::orderBy($order, $desc ? 'DESC' : 'ASC')->where("etat",0)
-                         ->paginate($ro);
-        }
-        foreach($factures as $facture ) {
-            $facture["totaline"] = DB::selectOne("SELECT total_lignes_facture_tva($facture->id) AS ttc ")->ttc;
-            $facture["fournisseur"] = Fournisseur::find($facture->id_fournisseur)->nom ;
-            $facture["sousCategorieIntitule"] = Souscategorie::find($facture->sousCategorie)->intitule_SC  ;
-        }
-        return $factures;
-
-
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -111,9 +86,9 @@ class FactureController extends Controller
      * @param  \App\Models\Facture  $facture
      * @return \Illuminate\Http\Response
      */
-    public function show( $facture)
+    public function show(Facture $facture)
     {
-       
+        dd($facture);
         $factures = Facture::find($facture) ;
         $data["LigneFactures"]=$factures->LigneFactures;
         $data['fournisseur']=$factures->fournisseurs ;
@@ -139,20 +114,8 @@ class FactureController extends Controller
      * @param  \App\Models\Facture  $facture
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request,$facture )
-    {   
-        $facturesuppeimer =Facture::find($facture);
-        if($facturesuppeimer->etat==1){
-            Facture::where('id', $facture)->update(['etat' => 0]);
-        }elseif($request->recupere=0){
-          destroy(facturesuppeimer);
-        }
-        $facturesup =Facture::find($facture);  
-    }
-    public function recuperer(Request $request){
-      
-        $facturesuppeimer =Facture::find($request->factDelet);
-        Facture::where('id', $facturesuppeimer->id)->update(['etat' => 1]);
-        
+    public function destroy(Facture $facture)
+    {
+        dd(Facture::find($facture));
     }
 }

@@ -1,5 +1,5 @@
 import React from 'react'
-import TableDasboard from './dashboard/TableDasboard'
+import TableDasboard from '../dashboard/TableDasboard'
 function Facture() {
   return (
     <div className='h-full '>
