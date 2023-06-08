@@ -7,7 +7,7 @@ function TableDasboard() {
     const [page, setPage] = useState(1);
     const [order, setOrder] = useState("id");
     const [DESC, setDESC] = useState(false);
-    const [maxRows, setMaxRows] = useState(10)
+    const [maxRows, setMaxRows] = useState(5)
 
     const handleMaxRowsChange = (event) => {
         setMaxRows(parseInt(event.target.value));
@@ -153,11 +153,10 @@ function TableDasboard() {
                                 ) : <i className="fa-solid fa-sort"></i>}
                             </th>
                             <th scope="col" className="px-6 py-3">
-                                date_fact
+                            FOURNISSEUR
                             </th>
-                            <th scope="col" className="px-6 py-3">
-                                id_fournisseur
-                            </th>
+                            <th scope="col" classNaDATE_FACTme="px-6 py-3">
+                            DATE_FACTURE                            </th>
                             <th scope="col" className="px-6 py-3">
                                 sousCategorie
                             </th>

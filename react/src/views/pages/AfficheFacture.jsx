@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState ,useRef } from 'react'
 import axiosClient from '../../axios-client'
 import { useParams } from 'react-router-dom'
+import jsPDF from 'jspdf';
 function AfficheFacture() {
     const [data, setData] = useState({})
     const [ttc, setTtc] = useState(0)
@@ -24,11 +25,26 @@ function AfficheFacture() {
             ht = ht + (parseFloat(val.pu) * parseFloat(val.quantite))
             setTtc(ht)
         })
+    
+	const handleGeneratePdf = () => {
+		const doc = new jsPDF({
+			format: 'a4',
+			unit: 'pt',
+		});
+		doc.setFont('Inter-Regular', 'normal');
+		doc.html(reportTemplateRef.current, {
+			async callback(doc) {
+				 doc.save('CV');
+			},
+		});
+        const reportTemplateRef = useRef(null);
+	};
 
     }
     return (
         <div className='flex justify-center align-items-center h-full  '>
-            <div className=' container mx-auto h-full  md:w-4/6 bg-gray-200 p-10 xl:w-4/6 lg:w-4/6   '>
+
+            <div  className=' container mx-auto h-full   md:w-4/6 bg-gray-200 p-10 xl:w-4/6 lg:w-4/6   '>
                 <div className='flex justify-between  '>
                     <div>
                         <h1 className='mb-4 text-3xl font-extrabold  tracking-tight text-gray-900   dark:text-white' > Facture N° {data.facture?.numero_fact} </h1>

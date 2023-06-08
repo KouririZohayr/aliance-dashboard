@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import { uid } from 'uid';
 import InvoiceItem from './InvoiceItem';
-//import InvoiceModal from './InvoiceModal';
-//import incrementString from '../helpers/incrementString';
-import axiosClient  from '../../axios-client';
+
+import axiosClient from '../../axios-client';
 import Fournisseur from "./Fournisseur"
 import Categorie from "./Cat"
 const date = new Date();
@@ -11,7 +10,7 @@ const date = new Date();
 
 export default function InvoiceForm() {
 
-  const [data_F,setDate_F]=useState('')
+  const [data_F, setDate_F] = useState('')
   const [tva, setTva] = useState(20);
   const [fournisseur_id, setFournisseur_id] = useState(12);
   const [souscategorie_id, setSousCategorie_id] = useState(null);
@@ -31,12 +30,12 @@ export default function InvoiceForm() {
 
   const sendPostRequest = async () => {
 
-}
+  }
 
   const reviewInvoiceHandler = async (event) => {
     event.preventDefault();
     //setIsOpen(true);
-    
+
     try {
       const resp = await axiosClient.post('/Facture', {
         "date_fact": data_F,
@@ -46,9 +45,9 @@ export default function InvoiceForm() {
         "sousCategorie": souscategorie_id,
         "classeur": classeur_F,
         items,
-        "description":description_F,
+        "description": description_F,
         filepdf
-  
+
       });
       console.log(resp.data);
       setDate_F(null)
@@ -61,9 +60,9 @@ export default function InvoiceForm() {
       setItems([])
       setInvoiceNumber(null)
 
-  } catch (err) {
+    } catch (err) {
       console.error(err);
-  }
+    }
 
   };
 
@@ -122,12 +121,12 @@ export default function InvoiceForm() {
         <div className="flex flex-col justify-between space-y-2 border-b border-gray-900/10 pb-4 md:flex-row md:items-center md:space-y-0">
           <div className="flex space-x-2">
             <label className="flex items-center font-bold">Date de facture : </label>
-            <input type="date" className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500' onChange={(e)=>setDate_F(e.target.value)} value={data_F} />
+            <input type="date" className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500' onChange={(e) => setDate_F(e.target.value)} value={data_F} />
           </div>
 
           <div className="flex items-center space-x-2">
             <label className="flex items-center font-bold" htmlFor="invoiceNumber">
-                Numéro de facture:
+              Numéro de facture:
             </label>
             <input
               required
@@ -137,26 +136,26 @@ export default function InvoiceForm() {
               name="invoiceNumber"
               id="invoiceNumber"
 
-              value={invoiceNumber||''}
+              value={invoiceNumber || ''}
               onChange={(event) => setInvoiceNumber(event.target.value)}
             />
           </div>
 
           <div className="flex space-x-2">
             <label className="flex items-center font-bold">Classeur de facture : </label>
-            <input type="text" 
-             placeholder='20##/##/??'
-            className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500' onChange={(e)=>setClasseur_F(e.target.value)} value={classeur_F||''} />
+            <input type="text"
+              placeholder='20##/##/??'
+              className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500' onChange={(e) => setClasseur_F(e.target.value)} value={classeur_F || ''} />
 
           </div>
 
         </div>
         <h1 className="text-center text-lg font-bold">Facture:</h1>
         <div className="grid grid-cols-3 gap-2 pt-4 pb-8">
-            <Fournisseur Fournisseur_F={fournisseur_id}  setIDF={setFournisseur_id} />
+          <Fournisseur Fournisseur_F={fournisseur_id} setIDF={setFournisseur_id} />
         </div>
         <div className="grid grid-cols-3 gap-2 pt-4 pb-8">
-            <Categorie  setType_F={setSousCategorie_id}  Type_F={souscategorie_id}/>
+          <Categorie setType_F={setSousCategorie_id} Type_F={souscategorie_id} />
         </div>
         <table className="w-full p-4 text-left">
           <thead>
@@ -189,13 +188,13 @@ export default function InvoiceForm() {
           Ajouter un nouvel élément
         </button>
         <div className="flex flex-col items-end space-y-2 pt-6">
-        <input
-        className=" bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block  p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                type='number'
-                required
-              value={tva}
-              onChange={(event) => setTva(event.target.value)}
-            />
+          <input
+            className=" bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block  p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            type='number'
+            required
+            value={tva}
+            onChange={(event) => setTva(event.target.value)}
+          />
           <div className="flex w-full justify-between md:w-1/2">
             <span className="font-bold">Subtotal:</span>
             <span>dh {subtotal.toFixed(2)}</span>
@@ -205,52 +204,52 @@ export default function InvoiceForm() {
             <span className="font-bold">TVA:</span>
             <span>
               (
-                {tva || '0'}%
-                
-                ) dh {tvaRate.toFixed(2)}
+              {tva || '0'}%
+
+              ) dh {tvaRate.toFixed(2)}
             </span>
           </div>
           <div className="flex w-full justify-between border-t border-gray-900/10 pt-2 md:w-1/2">
             <span className="font-bold">Total:</span>
             <span className="font-bold">
-             dh {total % 1 === 0 ? total : total.toFixed(2)}
+              dh {total % 1 === 0 ? total : total.toFixed(2)}
             </span>
           </div>
         </div>
 
 
         <div className="mb-3">
-  <label
-    htmlFor="formFile"
-    className="mb-2 inline-block text-neutral-700 dark:text-neutral-200">
-      Télécharger une facture :
-    </label>
-  <input
-    className="relative m-0 block w-full min-w-0 flex-auto rounded border border-solid border-neutral-300 bg-clip-padding px-3 py-[0.32rem] text-base font-normal text-neutral-700 transition duration-300 ease-in-out file:-mx-3 file:-my-[0.32rem] file:overflow-hidden file:rounded-none file:border-0 file:border-solid file:border-inherit file:bg-neutral-100 file:px-3 file:py-[0.32rem] file:text-neutral-700 file:transition file:duration-150 file:ease-in-out file:[border-inline-end-width:1px] file:[margin-inline-end:0.75rem] hover:file:bg-neutral-200 focus:border-primary focus:text-neutral-700 focus:shadow-te-primary focus:outline-none dark:border-neutral-600 dark:text-neutral-200 dark:file:bg-neutral-700 dark:file:text-neutral-100 dark:focus:border-primary"
-    type="file"
-    accept="application/pdf"
-    onChange={event=>setFilepdf(event.target.files[0])}
-    id="formFile" />
-</div>
+          <label
+            htmlFor="formFile"
+            className="mb-2 inline-block text-neutral-700 dark:text-neutral-200">
+            Télécharger une facture :
+          </label>
+          <input
+            className="relative m-0 block w-full min-w-0 flex-auto rounded border border-solid border-neutral-300 bg-clip-padding px-3 py-[0.32rem] text-base font-normal text-neutral-700 transition duration-300 ease-in-out file:-mx-3 file:-my-[0.32rem] file:overflow-hidden file:rounded-none file:border-0 file:border-solid file:border-inherit file:bg-neutral-100 file:px-3 file:py-[0.32rem] file:text-neutral-700 file:transition file:duration-150 file:ease-in-out file:[border-inline-end-width:1px] file:[margin-inline-end:0.75rem] hover:file:bg-neutral-200 focus:border-primary focus:text-neutral-700 focus:shadow-te-primary focus:outline-none dark:border-neutral-600 dark:text-neutral-200 dark:file:bg-neutral-700 dark:file:text-neutral-100 dark:focus:border-primary"
+            type="file"
+            accept="application/pdf"
+            onChange={event => setFilepdf(event.target.files[0])}
+            id="formFile" />
+        </div>
 
-<div className='grid  gap-2 pt-4 pb-8'>
-        <label  className="fw-bold form-label">Remarques :</label>
-        <textarea onChange={(e)=>setDescription_F(e.target.value)} 
-        placeholder="Remarques !!!"
-        name="notes" cols="1" rows="4" 
-        className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-          {description_F}
-        </textarea>
+        <div className='grid  gap-2 pt-4 pb-8'>
+          <label className="fw-bold form-label">Remarques :</label>
+          <textarea onChange={(e) => setDescription_F(e.target.value)}
+            placeholder="Remarques !!!"
+            name="notes" cols="1" rows="4"
+            className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+            {description_F}
+          </textarea>
 
-</div>
+        </div>
 
 
         <button
-            className="w-full rounded-md bg-blue-500 py-2 text-sm text-white shadow-sm hover:bg-blue-600"
-            type="submit"
-          >
-            Review Invoice
-          </button>
+          className="w-full rounded-md bg-blue-500 py-2 text-sm text-white shadow-sm hover:bg-blue-600"
+          type="submit"
+        >
+          Review Invoice
+        </button>
       </div>
 
     </form>

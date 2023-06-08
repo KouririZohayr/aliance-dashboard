@@ -3,8 +3,7 @@ import { Link } from 'react-router-dom'
 import axiosClient from '../../axios-client'
 import { useStateContext } from '../../context/ContextProvider'
 function Login() {
-  const emailRef = useRef()
-  const passwordRef = useRef()
+
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const { setUser, setToken } = useStateContext()
@@ -25,6 +24,7 @@ function Login() {
         const response = error.response;
         if (response && response.status === 422) {
           console.log(response.data.errors);
+          
         }
       })
   }

@@ -15,7 +15,7 @@ function Card() {
 
   const topComponenet =[
     {
-        name : "charge non stockable",
+        name : "charges non stockable",
         icon : <FcCurrencyExchange size={30} />,
         mantant :data.chargeNonStocable
     },
@@ -25,7 +25,7 @@ function Card() {
         mantant : data.mobilisationMateriel + data.mobilisationMobilier + data.mobilisatiAmenagements
     },
     {
-        name : "services",
+        name : "Embolisations",
         icon : <DiMaterializecss size={30} />,
         mantant : data.services
 

@@ -39,13 +39,15 @@ class AuthController extends Controller
         $user = Auth::user();
         $token = $user->createToken('main')->plainTextToken;
         return response(compact('user', 'token'));
+
     }
 
     public function logout(Request $request)
     {
         /** @var \App\Models\User $user */
-        $user = $request->user();
-        $user->currentAccessToken()->delete();
+       if ($request->user()) {
+        $request->user()->tokens()->delete();
+}
         return response('', 204);
     }
 }

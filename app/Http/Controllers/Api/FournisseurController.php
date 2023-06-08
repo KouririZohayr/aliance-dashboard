@@ -13,10 +13,28 @@ class FournisseurController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
-        $fournisseur = Fournisseur::all();
-        return response()->json($fournisseur);
+    public function index(Request $request)
+    
+    { 
+        $ro = $request->row;
+        $idf = $request->IDf;
+        $order = $request->order ?? 'id';
+        $desc = $request->DESC || TRUE;
+        $query = $request->q;
+        
+       if (!empty($query)) {
+        $fournisseurs = Fournisseur::search($query)
+                    ->orderBy($order, $desc ? 'DESC' : 'ASC')
+                   ->paginate($ro);
+   } else {
+        $fournisseurs = Fournisseur::orderBy($order, $desc ? 'DESC' : 'ASC')
+                    ->paginate($ro);
+   }
+        foreach( $fournisseurs as $value){
+            $value["nombreFacture"] = Facture::where('id_fournisseur',$value->id)->count();
+        }
+      
+        return $fournisseurs;
     }
 
     /**
@@ -24,6 +42,7 @@ class FournisseurController extends Controller
      */
     public function store(Request $request)
     {
+
         $newfournisseur=new Fournisseur([
             'ICE' => $request->ICE,
             'nom' => $request->nom,
@@ -82,6 +101,13 @@ class FournisseurController extends Controller
             }
         }
        return  response()->json($result);
+    }
+    public function fournisseurAndNbrFactute(){
+        $fournisseur = Fournisseur::all();
+        foreach( $fournisseur as $value){
+            $value["nombreFacture"] = Facture::where('id_fournisseur',$value->id)->count();
+        }
+        return $fournisseur;
     }
 
 }

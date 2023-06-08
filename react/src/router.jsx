@@ -10,6 +10,7 @@ import AddFacture from "./views/pages/AddFacture";
 import AfficheFacture from "./views/pages/AfficheFacture";
 import Archives from "./views/pages/Archives";
 import Users from "./views/pages/Users";
+import Fournisseur from "./views/pages/Fournisseur";
 
 const router = createBrowserRouter([
   {
@@ -42,6 +43,10 @@ const router = createBrowserRouter([
         element: <AfficheFacture />
       },
       {
+        path: '/fournisseur',
+        element: <Fournisseur />
+      },
+      {
         path: '/archives',
         element: <Archives />
       },
@@ -63,7 +68,6 @@ const router = createBrowserRouter([
 
     ]
   },
-
   {
     path: "*",
     element: <NotFound />

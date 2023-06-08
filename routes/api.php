@@ -23,21 +23,20 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
+    Route::apiResource('/users', UserController::class);
     Route::apiResource('/fournisseur',FournisseurController::class);
- 
     Route::apiResource('/souscategorie',SouscategorieController::class);
+    Route::post('/signup', [AuthController::class, 'signup']);
+    Route::get('/statistique',[statisticsController::class, 'lin_Bar_Chart']);
+    Route::get('/statistique/totalTop',[statisticsController::class, 'totalTop']);
+    Route::Resource('/Facture',FactureController::class);
+    Route::get('/FactureArchive', [FactureController::class, 'index2']);
+    Route::post('/Facturerecuperer', [FactureController::class, 'recuperer']);
+    Route::apiResource('/categorie',CategorieController::class);
+    Route::get('/fournisseurAndNbrFactute', [FournisseurController::class, 'fournisseurAndNbrFactute']);
     Route::get('/user', function (Request $request) {
         return $request->user();
     });
-    Route::apiResource('/users', UserController::class);
+  
 });
-
-Route::post('/signup', [AuthController::class, 'signup']);
-
 Route::post('/login', [AuthController::class, 'login']);
-Route::get('/statistique',[statisticsController::class, 'lin_Bar_Chart']);
-Route::get('/statistique/totalTop',[statisticsController::class, 'totalTop']);
-Route::Resource('/Facture',FactureController::class);
-Route::get('/FactureArchive', [FactureController::class, 'index2']);
-Route::post('/Facturerecuperer', [FactureController::class, 'recuperer']);
-Route::apiResource('/categorie',CategorieController::class);

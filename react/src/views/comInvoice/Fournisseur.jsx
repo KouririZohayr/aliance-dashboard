@@ -9,9 +9,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 function App({ Fournisseur_F, setIDF }) {
-
   const notify = (m) => toast(m);
-
   const [fournisseurdata, setFournisseurdata] = useState([])
   const [f_v, setF_v] = useState()
   const [f_info, setF_info] = useState(null)
@@ -25,7 +23,7 @@ function App({ Fournisseur_F, setIDF }) {
   const getdata = () => {
     axiosClient.get(`/fournisseur`).then(reponse => {
 
-      setFournisseurdata(reponse.data)
+      setFournisseurdata(reponse.data.data)
       console.log(reponse.data)
     }
 

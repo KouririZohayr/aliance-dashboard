@@ -1,4 +1,4 @@
-import React, { useRef } from 'react'
+import { useRef } from 'react'
 import { Link } from 'react-router-dom'
 import axiosClient from '../../axios-client'
 import { useStateContext } from '../../context/ContextProvider'
@@ -134,6 +134,8 @@ function Singup() {
           >
             Connexion
           </button>
+
+          
           <Link to="/login" className='text-red-600 text-capitalize' >Login</Link>
         </form>
 
