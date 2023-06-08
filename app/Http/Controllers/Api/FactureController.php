@@ -128,9 +128,27 @@ class FactureController extends Controller
      * @param  \App\Models\Facture  $facture
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Facture $facture)
+    public function update(Request $request, $id)
     {
-        //
+        $facture = Facture::find($id);
+        $facture->date_fact=$request->date_fact ;
+        $facture->numero_fact=$request->numero_fact ;
+        $facture->TVA=$request->TVA ;
+        $facture->description=$request->description ;
+        $facture->id_fournisseur=$request->id_fournisseur ;
+        $facture->save();
+        $facture->LigneFactures()->delete();
+        foreach($request->items as $article){
+            $article = new Ligne_facture([
+                "description"=> $article["description"],
+                "quantite" => $article["quantite"] ,
+                "pu" => $article["pu"]
+            ]);
+            $facture->LigneFactures()->save($article);
+            $article = null ;
+        };
+        return $facture;
+
     }
 
     /**
@@ -145,7 +163,7 @@ class FactureController extends Controller
         if($facturesuppeimer->etat==1){
             Facture::where('id', $facture)->update(['etat' => 0]);
         }elseif($request->recupere=0){
-          destroy(facturesuppeimer);
+          destroy($facturesuppeimer);
         }
         $facturesup =Facture::find($facture);
     }

@@ -47,8 +47,19 @@ export default function InvoiceForm() {
         items,
         "description": description_F,
         filepdf
-
-      });
+        
+      }
+     
+      );
+      console.log({ "date_fact": data_F,
+      "numero_fact": invoiceNumber,
+      "TVA": tva,
+      "id_fournisseur": fournisseur_id,
+      "sousCategorie": souscategorie_id,
+      "classeur": classeur_F,
+      items,
+      "description": description_F,
+      filepdf})
       console.log(resp.data);
       setDate_F(null)
       setTva(20)
