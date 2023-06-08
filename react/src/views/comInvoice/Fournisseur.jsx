@@ -26,7 +26,7 @@ function App({ Fournisseur_F, setIDF }) {
     axiosClient.get(`/fournisseur`).then(reponse => {
 
       setFournisseurdata(reponse.data)
-      console.log(reponse.data)
+      //console.log(reponse.data)
     }
 
 
@@ -120,11 +120,11 @@ function App({ Fournisseur_F, setIDF }) {
         /*
         getOptionLabel ={(option)=>option.id}
         getOptionValue ={(option)=>option.nom}
-        
+
         */
         value={f_v}
         onChange={opt => {
-          console.log(opt)
+          //console.log(opt)
           setF_info(fournisseurdata.find(f => f.id === opt?.value))
           setF_v(opt)
 
@@ -142,9 +142,9 @@ function App({ Fournisseur_F, setIDF }) {
           <p> Email :  {f_info.email} </p>
         </div>
       }
-      {/*        
-     <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" 
-        
+      {/*
+     <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+
         onClick={add_interface}>
           Créer une nouvelle fournisseur
         </button> */}

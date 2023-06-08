@@ -10,19 +10,25 @@ use Illuminate\Http\Request;
 class statisticsController extends Controller
 {
   public function lin_Bar_Chart(Request $request){
-    $categories = Categorie::all() ; 
+    $type_c = (int) $request->type ?? 0;
+if ($type_c == 0){
+    $categories = Categorie::all();
+}else{
+    $categories = Categorie::where('type', $type_c)->get();
+}
+
     $datachart = [];
     foreach($categories as $categorie){
       $idcat =(int)$categorie->id ;
       $label = $categorie->intitule_CG ;
-      $data =  DB::select("call emp_performance($request->year,$idcat)"); 
+      $data =  DB::select("call emp_performance($request->year,$idcat)");
       $datachart[] = [
         "label"=> $label ,
-        "data"=>$data 
+        "data"=>$data
       ];
     }
     return  $datachart;
-   
+
   }
   public function totalTop(){
     $currentYear= now()->year;
@@ -40,8 +46,8 @@ class statisticsController extends Controller
       $resultArray = DB::selectOne("select calculate_total_by_categorie_and_y($currentYear,$key) as  $value")->$value;
       $result[$value] = $resultArray==NULL ? 0:$resultArray;
     };
-  
+
     return $result ;
   }
-  
+
 }

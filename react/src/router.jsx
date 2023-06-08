@@ -10,7 +10,7 @@ import AddFacture from "./views/pages/AddFacture";
 import AfficheFacture from "./views/pages/AfficheFacture";
 import Archives from "./views/pages/Archives";
 import Users from "./views/pages/Users";
-
+import Userspass from "./views/adminPages/ChangePassword";
 const router = createBrowserRouter([
   {
     path: '/',
@@ -33,10 +33,7 @@ const router = createBrowserRouter([
         element: <AddFacture />,
 
       },
-      {
-        path: '/register',
-        element: <Singup />
-      },
+
       {
         path: '/afficheFacture/:idf',
         element: <AfficheFacture />
@@ -49,6 +46,10 @@ const router = createBrowserRouter([
         path: '/users',
         element: <Users />
       },
+      {
+        path: '/userspass',
+        element: <Userspass />
+      },
 
     ]
   },
@@ -59,7 +60,10 @@ const router = createBrowserRouter([
       {
         path: '/login',
         element: <Login />
-      }
+      }     , {
+        path: '/register',
+        element: <Singup />
+      },
 
     ]
   },

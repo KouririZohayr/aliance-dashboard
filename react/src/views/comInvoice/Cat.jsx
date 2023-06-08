@@ -6,7 +6,7 @@ import Select from "react-select";
 import axiosClient from "../../axios-client";
 
 
-export default function App({ Type_F = 23, setType_F }) {
+export default function App({Type_FF = null, setType_F }) {
 
   const [charge, setCharge] = useState(null);
 
@@ -16,7 +16,8 @@ export default function App({ Type_F = 23, setType_F }) {
 
 
   const [categorie, setCategorie] = useState(null);
-  const [soucategorie, setSouategorie] = useState(Type_F);
+  const [soucategorie, setSouategorie] = useState(null);
+
 
 
   const [categoriesdata, setCategoriesdata] = useState([]);
@@ -34,11 +35,6 @@ export default function App({ Type_F = 23, setType_F }) {
 
 
 
-  /*
-  
-  const [categoriesLoading,setCategoriesLoading]=useState(false);
-  const [soucategoriesLoading,setSouategoriesLoading]=useState(false);
-  */
 
   const getCategorie = async () => {
     const response = await axiosClient.get(`/categorie`);
@@ -52,51 +48,43 @@ export default function App({ Type_F = 23, setType_F }) {
   };
 
 
+
   useEffect(() => {
+
     getsoucategorie();
     getCategorie();
+
   }, [])
 
-  /*
-  useEffect(()=>{
-  console.log(soucategories.filter(s => s.id_CG==id_CG ).map(e=> ({'value': e.id, 'label': e.intitule_SC , 'id_CG':e.id_CG})) )
-  
-  },[soucategories])
-  useEffect(()=>{
-    if(Type_F){
-      setId_CG(soucategoriesdata.find(s => s.id_CG === Type_F)?.id_CG)
-    console.log(soucategoriesdata.find(s => s.id_CG === Type_F)?.id_CG)  
-      setType_ch(categoriesdata.find( c=> c.id === id_CG )?.type) 
+  useEffect(() => {
+    if(soucategoriesdata.length && categoriesdata.length ){
+      f_ff();
+      //console.log(id_CG,type_ch)
     }
-    if (type_ch){
-      setCharge(charges.find(c => c.value == type_ch ));
-      setCategorie(categoriesdata.map(e=> ({'value': e.id, 'label': e.intitule_CG,'type':e.type})).find( c => c.id == id_CG))
-    }
-  
-  
-  },[Type_F])
-  useEffect(()=>{
-    console.log(categories)
-  },[categories])
-  
-  
-  useEffect(()=>{
-    //charge&&setCategories(soucategoriesdata.filter( c => c.type==charge))
-    console.log(soucategoriesdata.filter( c => c.type==charge))
-  },[Type_F])
-  */
+  },[soucategoriesdata,categoriesdata])
 
+  useEffect(() => {
+    if(id_CG && type_ch && Type_FF){
+      console.log(id_CG,type_ch)
+setCharge(charges.find(c => c.value == type_ch))
+handleChargeChange(charges.find(c => c.value == type_ch))
+setCategorie(categoriesdata?.map(e => ({ 'value': e.id, 'label': e.intitule_CG, 'type': e.type })).find( ca => ca.value==id_CG ))
+handletCategorieChange(categoriesdata?.map(e => ({ 'value': e.id, 'label': e.intitule_CG, 'type': e.type })).find( ca => ca.value==id_CG ))
+setSouategorie(soucategoriesdata.map(e => ({ 'value': e.id, 'label': e.intitule_SC, 'id_CG': e.id_CG })).find( s=> s.value == Type_FF))
+    }
+  },[id_CG,type_ch])
 
   const handleChargeChange = (obj) => {
     setCharge(obj);
-    setCategorie([])
-
+    setCategories([])
+    setCategorie(null)
     if (obj) {
-      setCategories(categoriesdata.filter(e => obj.value != null && e.type == obj.value))
+      setCategories(categoriesdata.filter(e => obj.value != null && e.type == obj.value)?.map(e => ({ 'value': e.id, 'label': e.intitule_CG, 'type': e.type })))
     } else {
       setCategorie(null)
       setCategories([])
     }
+
     setSouategorie(null);
   };
 
@@ -108,7 +96,7 @@ export default function App({ Type_F = 23, setType_F }) {
     setSouategorie(null);
     if (obj) {
       ///console.log(soucategoriesdata.filter(s => s.id_CG==obj.value ))
-      setSouategories(soucategoriesdata.filter(s => s.id_CG == obj.value))
+      setSouategories(soucategoriesdata.filter(s => s.id_CG == obj.value).map(e => ({ 'value': e.id, 'label': e.intitule_SC, 'id_CG': e.id_CG })))
 
     }
     else {
@@ -125,19 +113,17 @@ export default function App({ Type_F = 23, setType_F }) {
     } else {
       setType_F(null)
     }
-    //console.log(obj)
   };
 
+function f_ff(){
+if (Type_FF){
+  setId_CG(soucategoriesdata.find(s => s.id === Type_FF)?.id_CG)
+  setType_ch(id_CG&&categoriesdata.find( c=> c.id === id_CG )?.type)
+   //console.log(id_CG,id_ch)
+}
 
 
-  /*
-  
-  
-  
-  
-    */
-
-
+}
 
   return (
     <>
@@ -149,29 +135,30 @@ export default function App({ Type_F = 23, setType_F }) {
         isClearable={true}
         options={charges}
         onChange={handleChargeChange}
-      //isLoading={false}
-
+      isLoading={soucategoriesdata.length == 0 && categoriesdata.length == 0}
+      required={true}
       />
       <Select
         value={categorie}
         isClearable={true}
         options={
-          categories?.map(e => ({ 'value': e.id, 'label': e.intitule_CG, 'type': e.type }))
+          categories
         }
         onChange={handletCategorieChange}
-      // isDisabled={!charge}
-      //isLoading={categoriesLoading}
+      isDisabled={!charge}
+      required={true}
 
       />
       <Select
-        //value={soucategorie}
+        value={soucategorie}
         isClearable={true}
         options={
-          soucategories.map(e => ({ 'value': e.id, 'label': e.intitule_SC, 'id_CG': e.id_CG }))
+          soucategories
         }
         onChange={handletSouCategorieChange}
-      //  isDisabled={!categorie}
-      // isLoading={soucategoriesLoading}
+        isDisabled={!categorie}
+        required={true}
+
 
 
       />

@@ -32,7 +32,7 @@ function BarChart() {
               ],
               borderWidth: 1,
             },
-       
+
           ],
         }}
         height={400}
