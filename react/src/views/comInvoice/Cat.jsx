@@ -4,6 +4,7 @@ import Select from "react-select";
 
 
 import axiosClient from "../../axios-client";
+import axios from "axios";
 
 
 export default function App({Type_FF = null, setType_F }) {
@@ -42,7 +43,7 @@ export default function App({Type_FF = null, setType_F }) {
     //console.log(response.data);
   };
   const getsoucategorie = async () => {
-    const response = await axiosClient.get(`/souscategorie`);
+    const response = await axios.get(`http://127.0.0.1:8000/api/souscategorie`);
     setSoucategoriesdata(response.data)
     //console.log(response.data);
   };

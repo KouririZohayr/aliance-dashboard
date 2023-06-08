@@ -54,7 +54,7 @@ function App({ Fournisseur_F, setIDF }) {
     const config = {
       onUploadProgress: progressEvent => console.log(progressEvent.loaded)
     }
-    axios.post(`http://127.0.0.1:3000/api/fournisseur`, form, config)
+    axios.post(`http://127.0.0.1:8000/api/fournisseur`, form, config)
       .then(function (response) {
         closeModal()
         getdata()
