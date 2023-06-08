@@ -24,7 +24,7 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::apiResource('/users', UserController::class);
-    Route::apiResource('/fournisseur',FournisseurController::class);
+ 
     Route::apiResource('/souscategorie',SouscategorieController::class);
     Route::post('/signup', [AuthController::class, 'signup']);
     Route::get('/statistique',[statisticsController::class, 'lin_Bar_Chart']);
@@ -39,4 +39,10 @@ Route::middleware('auth:sanctum')->group(function () {
     });
   
 });
+
+
 Route::post('/login', [AuthController::class, 'login']);
+
+Route::apiResource('/fournisseur',FournisseurController::class);
+
+Route::post('/signup', [AuthController::class, 'signup']);

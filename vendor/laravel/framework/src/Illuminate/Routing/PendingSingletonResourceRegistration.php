@@ -90,12 +90,23 @@ class PendingSingletonResourceRegistration
     /**
      * Indicate that the resource should have creation and storage routes.
      *
-     * @param  bool  $creatable
      * @return $this
      */
-    public function creatable($creatable = true)
+    public function creatable()
     {
-        $this->options['creatable'] = $creatable;
+        $this->options['creatable'] = true;
+
+        return $this;
+    }
+
+    /**
+     * Indicate that the resource should have a deletion route.
+     *
+     * @return $this
+     */
+    public function destroyable()
+    {
+        $this->options['destroyable'] = true;
 
         return $this;
     }

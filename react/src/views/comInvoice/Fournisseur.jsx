@@ -7,6 +7,7 @@ import DialogModal from './DialogModal';
 
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import axios from "axios";
 
 function App({ Fournisseur_F, setIDF }) {
   const notify = (m) => toast(m);
@@ -53,7 +54,7 @@ function App({ Fournisseur_F, setIDF }) {
     const config = {
       onUploadProgress: progressEvent => console.log(progressEvent.loaded)
     }
-    axiosClient.post(`/fournisseur`, form, config)
+    axios.post(`http://127.0.0.1:3000/api/fournisseur`, form, config)
       .then(function (response) {
         closeModal()
         getdata()
@@ -118,11 +119,11 @@ function App({ Fournisseur_F, setIDF }) {
         /*
         getOptionLabel ={(option)=>option.id}
         getOptionValue ={(option)=>option.nom}
-        
+
         */
         value={f_v}
         onChange={opt => {
-          console.log(opt)
+          //console.log(opt)
           setF_info(fournisseurdata.find(f => f.id === opt?.value))
           setF_v(opt)
 
@@ -140,9 +141,9 @@ function App({ Fournisseur_F, setIDF }) {
           <p> Email :  {f_info.email} </p>
         </div>
       }
-      {/*        
-     <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" 
-        
+      {/*
+     <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+
         onClick={add_interface}>
           Créer une nouvelle fournisseur
         </button> */}

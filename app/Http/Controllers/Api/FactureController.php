@@ -26,11 +26,11 @@ class FactureController extends Controller
         $desc = $request->DESC || TRUE;
         $query = $request->q;
 
-       if (!empty($query)) {
-             $factures = Facture::search($query)
-                         ->orderBy($order, $desc ? 'DESC' : 'ASC')->where("etat",1)
-                        ->paginate($ro);
-        } else {
+        if (!empty($query)) {
+            $factures = Facture::where('description', 'LIKE', "%{$query}%")
+                        ->orderBy($order, $desc ? 'DESC' : 'ASC')->where("etat",1)
+                       ->paginate($ro);
+       } else {
              $factures = Facture::orderBy($order, $desc ? 'DESC' : 'ASC')->where("etat",1)
                          ->paginate($ro);
         }
@@ -113,7 +113,7 @@ class FactureController extends Controller
      */
     public function show( $facture)
     {
-       
+
         $factures = Facture::find($facture) ;
         $data["LigneFactures"]=$factures->LigneFactures;
         $data['fournisseur']=$factures->fournisseurs ;
@@ -140,19 +140,19 @@ class FactureController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy(Request $request,$facture )
-    {   
+    {
         $facturesuppeimer =Facture::find($facture);
         if($facturesuppeimer->etat==1){
             Facture::where('id', $facture)->update(['etat' => 0]);
         }elseif($request->recupere=0){
           destroy(facturesuppeimer);
         }
-        $facturesup =Facture::find($facture);  
+        $facturesup =Facture::find($facture);
     }
     public function recuperer(Request $request){
-      
+
         $facturesuppeimer =Facture::find($request->factDelet);
         Facture::where('id', $facturesuppeimer->id)->update(['etat' => 1]);
-        
+
     }
 }
